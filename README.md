@@ -1,11 +1,6 @@
-# OTA Mirror (HTTP directory listing → local folder)
+# WebFolder Mirror (HTTP directory listing → local folder)
 
 Ce script permet de **télécharger récursivement** tout le contenu (dossier + sous-dossiers) d’un répertoire exposé en HTTP (type “index of /…”) et de **synchroniser** ensuite le dossier local avec le serveur (téléchargement des fichiers manquants ou modifiés).
-
-## Fichiers
-
-- `ota_mirror.py` : le script principal
-- `requirements.txt` : dépendances Python
 
 ## Prérequis
 
@@ -26,24 +21,17 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Éditer en haut du fichier `ota_mirror.py` :
+Éditer en haut du fichier `webFolderMirror.py` :
 
-- `TARGET_URL` : l’URL du dossier distant à répliquer (ex: `https://websetup.froggitti.net/ota-storage/`)
+- `TARGET_URL` : l’URL du dossier distant à répliquer 
 - `DEST_DIR` : le dossier local de destination
-
-Exemple :
-
-```python
-TARGET_URL = "https://websetup.froggitti.net/ota-storage/"
-DEST_DIR = r"./ota-storage-mirror"
-```
 
 ## Utilisation
 
 Lancer :
 
 ```bash
-python ota_mirror.py
+python webFolderMirror.py
 ```
 
 Le script :
@@ -54,13 +42,13 @@ Le script :
    - les fichiers modifiés (détection via `ETag` / `Last-Modified` / `Content-Length` si disponibles).
 
 Un fichier d’état est créé/maintenu dans :
-- `DEST_DIR/.ota_mirror_state.tsv`
+- `DEST_DIR/.webFolderMirror_state.tsv`
 
 ## Options
 
-Dans `ota_mirror.py`, tu peux aussi ajuster :
+Dans `webFolderMirror.py`, tu peux aussi ajuster :
 
-- `DRY_RUN = True` : n’écrit rien, affiche seulement ce qui serait téléchargé
+- `DRY_RUN = True` : ne télécharge rien, affiche seulement ce qui serait téléchargé
 - `VERIFY_TLS` : validation TLS (laisser `True` sauf cas particulier)
 - `TIMEOUT_SECS` : timeout réseau
 - `USER_AGENT` : user-agent HTTP
@@ -72,5 +60,4 @@ Dans `ota_mirror.py`, tu peux aussi ajuster :
 - Le script ne supprime pas (pour l’instant) les fichiers locaux qui n’existent plus sur le serveur.
 
 ## Licence
-
-À définir.
+MIT License
