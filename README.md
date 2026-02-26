@@ -1,4 +1,5 @@
-# WebFolder Mirror (HTTP directory listing → local folder)
+# WebFolder Mirror
+HTTP directory listing → local folder
 
 Ce script permet de **télécharger récursivement** tout le contenu (dossier + sous-dossiers) d’un répertoire exposé en HTTP (type “index of /…”) et de **synchroniser** ensuite le dossier local avec le serveur (téléchargement des fichiers manquants ou modifiés).
 
