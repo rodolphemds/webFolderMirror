@@ -262,7 +262,7 @@ def should_download(
 
 
 def load_state(dest_dir: Path) -> Dict[str, Dict[str, str]]:
-    state_path = dest_dir / ".ota_mirror_state.tsv"
+    state_path = dest_dir / ".webFolderMirror_state.tsv"
     db: Dict[str, Dict[str, str]] = {}
     if not state_path.exists():
         return db
@@ -281,7 +281,7 @@ def load_state(dest_dir: Path) -> Dict[str, Dict[str, str]]:
 
 
 def save_state(dest_dir: Path, db: Dict[str, Dict[str, str]]) -> None:
-    state_path = dest_dir / ".ota_mirror_state.tsv"
+    state_path = dest_dir / ".webFolderMirror_state.tsv"
     lines: List[str] = []
     for rel, meta in sorted(db.items(), key=lambda x: x[0]):
         lines.append("\t".join([rel, meta.get("etag", "") or "", meta.get("last_modified", "") or "", meta.get("size", "") or ""]))

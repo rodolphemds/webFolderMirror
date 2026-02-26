@@ -4,7 +4,7 @@ Ce script permet de **télécharger récursivement** tout le contenu (dossier + 
 
 ## Prérequis
 
-- Python **3.9+**
+- Python **3.9+**, je recommande d'utiliser un environnement virtuel (`venv`).
 - Accès réseau vers l’URL cible
 
 ## Installation
@@ -46,7 +46,7 @@ Un fichier d’état est créé/maintenu dans :
 
 ## Options
 
-Dans `webFolderMirror.py`, tu peux aussi ajuster :
+Dans `webFolderMirror.py`, il est possible de configurer :
 
 - `DRY_RUN = True` : ne télécharge rien, affiche seulement ce qui serait téléchargé
 - `VERIFY_TLS` : validation TLS (laisser `True` sauf cas particulier)
@@ -56,7 +56,6 @@ Dans `webFolderMirror.py`, tu peux aussi ajuster :
 ## Limitations / remarques
 
 - Le serveur doit exposer un **listing HTML** navigable (autoindex).  
-- Certains serveurs ne supportent pas `HEAD` : dans ce cas, la détection de changements peut être moins fiable (le script tolère ces cas, mais comparera moins d’infos).
 - Le script ne supprime pas (pour l’instant) les fichiers locaux qui n’existent plus sur le serveur.
 
 ## Licence
