@@ -1,0 +1,76 @@
+# OTA Mirror (HTTP directory listing → local folder)
+
+Ce script permet de **télécharger récursivement** tout le contenu (dossier + sous-dossiers) d’un répertoire exposé en HTTP (type “index of /…”) et de **synchroniser** ensuite le dossier local avec le serveur (téléchargement des fichiers manquants ou modifiés).
+
+## Fichiers
+
+- `ota_mirror.py` : le script principal
+- `requirements.txt` : dépendances Python
+
+## Prérequis
+
+- Python **3.9+**
+- Accès réseau vers l’URL cible
+
+## Installation
+
+```bash
+python -m venv .venv
+# Linux/macOS
+source .venv/bin/activate
+# Windows PowerShell
+# .\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
+
+## Configuration
+
+Éditer en haut du fichier `ota_mirror.py` :
+
+- `TARGET_URL` : l’URL du dossier distant à répliquer (ex: `https://websetup.froggitti.net/ota-storage/`)
+- `DEST_DIR` : le dossier local de destination
+
+Exemple :
+
+```python
+TARGET_URL = "https://websetup.froggitti.net/ota-storage/"
+DEST_DIR = r"./ota-storage-mirror"
+```
+
+## Utilisation
+
+Lancer :
+
+```bash
+python ota_mirror.py
+```
+
+Le script :
+1. explore `TARGET_URL` et tous ses sous-dossiers (via le listing HTML),
+2. compare avec le contenu déjà présent dans `DEST_DIR`,
+3. télécharge :
+   - les fichiers manquants,
+   - les fichiers modifiés (détection via `ETag` / `Last-Modified` / `Content-Length` si disponibles).
+
+Un fichier d’état est créé/maintenu dans :
+- `DEST_DIR/.ota_mirror_state.tsv`
+
+## Options
+
+Dans `ota_mirror.py`, tu peux aussi ajuster :
+
+- `DRY_RUN = True` : n’écrit rien, affiche seulement ce qui serait téléchargé
+- `VERIFY_TLS` : validation TLS (laisser `True` sauf cas particulier)
+- `TIMEOUT_SECS` : timeout réseau
+- `USER_AGENT` : user-agent HTTP
+
+## Limitations / remarques
+
+- Le serveur doit exposer un **listing HTML** navigable (autoindex).  
+- Certains serveurs ne supportent pas `HEAD` : dans ce cas, la détection de changements peut être moins fiable (le script tolère ces cas, mais comparera moins d’infos).
+- Le script ne supprime pas (pour l’instant) les fichiers locaux qui n’existent plus sur le serveur.
+
+## Licence
+
+À définir.
